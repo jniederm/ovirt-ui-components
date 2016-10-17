@@ -3,32 +3,8 @@ import React, { PropTypes } from 'react'
 import style from './style.css'
 
 import ContainerFluid from '../ContainerFluid'
+import LoginButton from './LoginButton'
 import VmUserMessages from '../VmUserMessages'
-import { logout } from '../../actions/vm'
-
-const LoginButton = ({ config, dispatch }) => {
-  const onLogout = () => dispatch(logout())
-  const onLogin = () => {} // dispatch(showLoginDialog())
-
-  if (config.get('loginToken')) {
-    return (
-      <a className={style['user-name']} href='#' onClick={onLogout}>
-        <i className='fa fa-sign-out' aria-hidden='true' />&nbsp;{config.getIn(['user', 'name'])}
-      </a>
-    )
-  }
-
-  // TODO: dispatch login action to show login dialog
-  return (
-    <a className='user-name' href='#' onClick={onLogin}>
-      <i className='fa fa-sign-in' aria-hidden='true' />&nbsp;Login
-    </a>
-  )
-}
-LoginButton.propTypes = {
-  dispatch: PropTypes.func.isRequired,
-  config: PropTypes.object.isRequired,
-}
 
 function isUnread (userMessages) {
   return userMessages.get('unread')
@@ -37,7 +13,7 @@ function isUnread (userMessages) {
 /**
  * Main application header on top of the page
  */
-const VmsPageHeader = ({ title, userMessages, config, dispatch }) => {
+const VmsPageHeader = ({ title, userMessages }) => {
   const titleStyle = { padding: '0px 0 5px' }
 
   return (
@@ -48,7 +24,7 @@ const VmsPageHeader = ({ title, userMessages, config, dispatch }) => {
         </div>
         <ul className='nav navbar-nav navbar-utility'>
           <li>
-            <LoginButton dispatch={dispatch} config={config} />
+            <LoginButton />
           </li>
           <li className='dropdown'>
             <a href='#' data-toggle='dropdown'>
@@ -56,7 +32,7 @@ const VmsPageHeader = ({ title, userMessages, config, dispatch }) => {
                 <span className='pficon pficon-info' />&nbsp;Messages
               </div>
             </a>
-            <VmUserMessages userMessages={userMessages} config={config} dispatch={dispatch} />
+            <VmUserMessages userMessages={userMessages} />
           </li>
         </ul>
       </ContainerFluid>

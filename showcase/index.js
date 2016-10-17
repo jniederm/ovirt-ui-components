@@ -7,13 +7,16 @@ require('patternfly/dist/js/patternfly')
 import 'patternfly/dist/css/patternfly.css'
 import 'patternfly/dist/css/patternfly-additions.css'
 
-import { Dummy } from 'ovirt-ui-components'
+import { Dummy, VmsList } from 'ovirt-ui-components'
 
 import store from './store'
 
 ReactDOM.render(
   <Provider store={store}>
-    <Dummy />
+    <div>
+      <Dummy />
+      <VmsList />
+    </div>
   </Provider>,
   document.getElementById('app')
 )

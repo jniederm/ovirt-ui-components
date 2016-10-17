@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { PropTypes } from 'react'
+import { connect } from 'react-redux'
 
 import style from './style.css'
 
@@ -29,22 +30,25 @@ UserMessage.propTypes = {
   record: React.PropTypes.object.isRequired,
 }
 
-const VmUserMessages = ({ userMessages, dispatch }) => {
-  const onClearMessages = () => dispatch(clearUserMessages())
-
-  return (<div className='dropdown-menu infotip bottom-right'>
+const VmUserMessages = ({ userMessages, onClearMessages }) => (
+  <div className='dropdown-menu infotip bottom-right'>
     <div className='arrow' />
 
     <ul className='list-group'>
       {userMessages.get('records').map(r => (<UserMessage key={r.time} record={r} />))}
     </ul>
     <div className='footer'><a href='#' onClick={onClearMessages}>Clear Messages</a></div>
-  </div>)
-}
+  </div>
+)
 
 VmUserMessages.propTypes = {
-  dispatch: React.PropTypes.func.isRequired,
-  userMessages: React.PropTypes.object.isRequired,
+  userMessages: PropTypes.object.isRequired,
+  onClearMessages: PropTypes.func.isRequired,
 }
 
-export default VmUserMessages
+export default connect(
+  (state) => ({}),
+  (dispatch) => ({
+    onClearMessages: () => dispatch(clearUserMessages()),
+  })
+)(VmUserMessages)
